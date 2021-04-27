@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Select Subject</title>
+	<meta http-equiv="Content-Security-Policy" content="default-src *;script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:" >
+  <link rel="stylesheet" href="./onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="./onsenui/css/onsen-css-components.min.css">
+  <script src="./onsenui/js/onsenui.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script type="text/javascript">
+  	var sem = (location.href).split("=");
+	var semester = ["","Linear Algebra and Ordinary Differential Equations,Computational Mathematics and Integral Calculus,Engineering Physics,Engineering Chemistry ,Computer Programming",
+	"English for Communication,Probability and Statistics,Environmental Studies,Data Structures,Fundamentals of Electrical and Electronics Engineering",
+	"Design and Analysis of Algorithms,Digital Logic Design,Discrete Mathematical Structures ,Object Oriented Programming through JAVA,Computer Organization and Architecture,Gender Sensitivity",
+	"Database Management Systems,Web Technologies,Theory of Compuatation,Computer Networks,Operating Systems",
+	"Software Engineering,Microprocessors and Interfacing,Compiler Design ,Optimization Techniques,Business Economics and Financial Analysis,Professional Elective I",
+	"Object Oriented Analysis and Design ,Linux Programming, Data Warehousing and Data Mining,Professional Elective II,Open Elective I",
+	"Cloud Application Development ,Software Testing Methodology ,Big Data and Business Analytics,Professional Elective III ,Open Elective II",
+	"Information Security ,Machine Learning,Professional Elective IV"];
+	function getSubjects(sem) {
+		var subs = (semester[sem[1]]).split(",");
+		var i;
+		for(i=0;i<subs.length;i++) {
+			document.getElementById('subjects').innerHTML += "<div class=\"w3-panel w3-card-4\" onclick=\'location.href=\"home.html?id="+sem[1]+''+(i+1)+"&sub="+subs[i]+"\"\'  ><h4 >"+subs[i]+"</h4></div>";
+		}
+	}
+  </script>
+  <style type="text/css">
+  	body {
+  		overflow: auto;
+  	}
+  </style>
+</head>
+<body style="background-color: #F7DC6F;" onload="getSubjects(sem)">
+
+<p style="color:#B40431; font-size:23px; font-weight: bold; text-align:center">Subject List</p>
+	<div id="subjects"  >
+		
+	</div>
+</body>
+</html>

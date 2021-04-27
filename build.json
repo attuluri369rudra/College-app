@@ -1,0 +1,11 @@
+{
+	"android":{
+		"release":{
+			"keystore": "key-name.keystore",
+			"storePassword": "iare_ict",
+			"alias": "alias-name",
+			"password":"iare_ict",
+			"keystoreType":""
+		}
+	}
+}

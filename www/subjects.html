@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="kuro56900">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, maximum-scale=25.0, user-scalable=1.0">
+
+    <title>Home</title>
+    <link rel="stylesheet" href="./demo/demo.css">
+
+    <!-- SidebarJS Styles -->
+    <link rel="stylesheet" href="./dist/sidebarjs.css">
+    <link rel="stylesheet"  href="dynamicapp.css">
+  </head>
+   <script type="text/javascript">
+    var sem = (location.href).split("=");
+  var semester = ["","Linear Algebra and Ordinary Differential Equations,Computational Mathematics and Integral Calculus,Engineering Physics,Engineering Chemistry ,Computer Programming",
+  "English for Communication,Probability and Statistics,Environmental Studies,Data Structures,Fundamentals of Electrical and Electronics Engineering",
+  "Design and Analysis of Algorithms,Digital Logic Design,Discrete Mathematical Structures ,Object Oriented Programming through JAVA,Computer Organization and Architecture",
+  "Database Management Systems,Web Technologies,Theory of Computation ,Computer Networks,Operating Systems",
+  "Software Engineering,Microprocessors and Interfacing,Compiler Design ,Optimization Techniques,Business Economics and Financial Analysis,Professional Elective I",
+  "Object Oriented Analysis and Design ,Linux Programming, Data Warehousing and Data Mining,Professional Elective II,Open Elective I",
+  "Cloud Application Development ,Software Testing Methodology ,Big Data and Business Analytics,Professional Elective III ,Open Elective II",
+  "Information Security ,Machine Learning,Professional Elective IV"];
+  function getSubjects(sem) {
+    var subs = (semester[sem[1]]).split(",");
+    var i;
+    for(i=0;i<subs.length;i++) {
+      document.getElementById('subjects').innerHTML += "<div class=\"w3-panel w3-card-4\" style='background-color:#819FF7; margin-bottom:15px; height:70px; padding-top:26px; ' onclick=\'location.href=\"home.html?id="+sem[1]+''+(i+1)+"&sub="+subs[i]+"\"\'  ><span style='font-weight:bold; font-size:18px;'>"+subs[i]+"</span></div>";
+    }
+  }
+  </script>
+  <style type="text/css">
+    body {
+      overflow: auto;
+    }
+       </style>
+     <!-- SidebarJS Scripts -->
+    <script src="./dist/sidebarjs.js"></script>
+
+    <script type="text/javascript">
+      // SidebarJS I#F7DC6F
+      var sidebarjs = new SidebarJS('navbar');
+    </script>
+    <body style="background-color:white;" onload="getSubjects(sem)">
+      <header style="background-color: #004B4C;position: fixed;right: 0;left: 0;height: 50px;">
+     <div  onclick="location.href='dynamicapp.html'"  style="margin-top:0px;"><svg width="25" height="25" fill="#FFFFFF" style="margin-top:0px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M8 256c0 137 111 248 248 248s248-111 248-248S393 8 256 8 8 119 8 256zm448 0c0 110.5-89.5 200-200 200S56 366.5 56 256 145.5 56 256 56s200 89.5 200 200zm-72-20v40c0 6.6-5.4 12-12 12H256v67c0 10.7-12.9 16-20.5 8.5l-99-99c-4.7-4.7-4.7-12.3 0-17l99-99c7.6-7.6 20.5-2.2 20.5 8.5v67h116c6.6 0 12 5.4 12 12z"/></svg></div>
+    </header><br><br><br>
+	 <span style="text-align: center; color:#7B241C;font-weight: bold;"><center style="font-size: 25px; font-weight:bold;">List of Courses</center></span><br>
+  <div id="subjects"  ></div>
+  </body>
+</html>

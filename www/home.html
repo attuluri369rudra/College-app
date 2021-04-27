@@ -1,0 +1,2074 @@
+<html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="default-src *;script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:" >
+  <link rel="stylesheet" href="./onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="./onsenui/css/onsen-css-components.min.css">
+  <script src="./onsenui/js/onsenui.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <!--AJAX FUNCTIONS START-->
+<script type="text/javascript">
+function loadSyllabus() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pdfviewerS').src = ""+this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getS.php?sub="+((location.href).split("sub=")[1]).replace(/%20/g, " ")+"&type=2", true);
+  xhttp.send();
+}
+
+function loadCIS() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pdfviewerCIS').src = ""+this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getS.php?sub="+((location.href).split("sub=")[1]).replace(/%20/g, " ")+"&type=1", true);
+  xhttp.send();
+}
+
+function loadQB() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pdfviewerQB').src = ""+this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getS.php?sub="+((location.href).split("sub=")[1]).replace(/%20/g, " ")+"&type=3", true);
+  xhttp.send();
+}
+
+function loadQP() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pdfviewerQP').src = ""+this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getS.php?sub="+((location.href).split("sub=")[1]).replace(/%20/g, " ")+"&type=4", true);
+  xhttp.send();
+}
+
+function loadDoc(i) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('week'+i).innerHTML = this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getWeek.php?week_no="+i+"&sub="+((location.href).split("sub=")[1]).replace(/%20/g, " "), true);
+  xhttp.send();
+}
+function loadPdf(i) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pdfLinks'+i).innerHTML = this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getPdf.php?week_no="+i+"&sub="+((location.href).split("sub=")[1]).replace(/%20/g, " "), true);
+  xhttp.send();
+}
+function loadPpt(i) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('pptLinks'+i).innerHTML = this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getPpt.php?week_no="+i+"&sub="+((location.href).split("sub=")[1]).replace(/%20/g, " "), true);
+  xhttp.send();
+}
+</script>
+<!--AJAX FUNCTIONS ENDS-->
+  <script>
+  window.fn = {};
+
+window.fn.toggleMenu = function () {
+  document.getElementById('appSplitter').left.toggle();
+};
+
+window.fn.loadView = function (index) {
+  document.getElementById('appTabbar').setActiveTab(index);
+  document.getElementById('sidemenu').close();
+};
+
+window.fn.loadLink = function (url) {
+  window.open(url, '_blank');
+};
+
+window.fn.pushPage = function (page, anim) {
+  if (anim) {
+    document.getElementById('appNavigator').pushPage(page.id, { data: { title: page.title }, animation: anim });
+  } else {
+    document.getElementById('appNavigator').pushPage(page.id, { data: { title: page.title } });
+  }
+};
+function changePage() {
+  document.getElementById('textTitle').innerHTML = ((location.href).split("sub=")[1]).replace(/%20/g, " ");
+}
+</script>
+</head>
+<body onload="changePage();">
+
+<script type="text/javascript" src="cordova.js">
+//document.write("hello anvesh");
+document.addEventListener("backbutton", onBackKeyDown, false);
+function onBackKeyDown() {
+    // Handle the back button
+    alert("Backbutton is pressed!");
+   // var element = document.querySelector( ".navigator-container");
+    //var scope = angular.element( element ).scope();
+    //scope.popPage();
+}
+</script>
+<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+  <ons-page>
+    <ons-splitter id="appSplitter">
+      <ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left"collapse="" width="260px"></ons-splitter-side>
+      <ons-splitter-content page="tabbar.html"></ons-splitter-content>
+    </ons-splitter>
+  </ons-page>
+</ons-navigator>
+
+<!--<template id="tabbar.html">
+  <ons-page id="tabbar-page">
+    <ons-toolbar>
+      <div class="center">Home</div>
+      <div class="left">
+        <ons-toolbar-button onclick="fn.toggleMenu()">
+          <ons-icon icon="ion-navicon, material:md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+    <ons-tabbar swipeable id="appTabbar" position="bottom">
+      <ons-tab label="Home" icon="ion-home" page="home.html" active></ons-tab>
+      <ons-tab label="Videos" icon="ion-film-marker" page="animations.html"></ons-tab>
+    </ons-tabbar>
+
+    <script>
+      ons.getScriptPage().addEventListener('prechange', function(event) {
+        if (event.target.matches('#appTabbar')) {
+          event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+        }
+      });
+    </script>
+  </ons-page>
+</template>-->
+<template id="tabbar.html" >
+  <ons-page id="tabbar-page" >
+     <ons-toolbar style="background-color:#004B4C; text-align:center; ">
+     <!-- <div  onclick="location.href='subjects.html'"  style="margin-top:0px; margin-top:10px; margin-left:5px;"><svg width="25" height="25" fill="#FFFFFF" style="margin-top:10px margin-left:5px;"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M8 256c0 137 111 248 248 248s248-111 248-248S393 8 256 8 8 119 8 256zm448 0c0 110.5-89.5 200-200 200S56 366.5 56 256 145.5 56 256 56s200 89.5 200 200zm-72-20v40c0 6.6-5.4 12-12 12H256v67c0 10.7-12.9 16-20.5 8.5l-99-99c-4.7-4.7-4.7-12.3 0-17l99-99c7.6-7.6 20.5-2.2 20.5 8.5v67h116c6.6 0 12 5.4 12 12z"/></svg></div> --></span><h3 style="color:white; margin-left:8px;"><center>Course Contents Delivery</center></h3> 
+      <!--<div class="left">
+        <ons-toolbar-button onclick="fn.toggleMenu()">
+          <ons-icon style="color:white" icon="ion-navicon, material:md-menu"></ons-icon>
+        </ons-toolbar-button>
+      </div>-->
+    </ons-toolbar>
+    <ons-tabbar swipeable id="appTabbar" position="bottom" >
+      <ons-tab onclick="location.href='dynamicapp.html'" label="Home" active icon="ion-home" page="home.html" active style="background-color:#98AFC7;"></ons-tab>
+      <!--<ons-tab page="animations.html" style="background-color:#98AFC7;"></ons-tab>-->
+    </ons-tabbar>
+
+    <script>
+      ons.getScriptPage().addEventListener('prechange', function(event) {
+        if (event.target.matches('#appTabbar')) {
+          event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+        }
+      });
+    </script>
+  </ons-page>
+</template>
+
+<!--<template id="sidemenu.html">
+  <ons-page>
+    <div class="profile-pic">
+      <img src="./iarelogo.jpg">
+    </div>
+
+    <ons-list-title>Access</ons-list-title>
+    <ons-list>
+      <ons-list-item onclick="location.href='index.html'">
+        <div class="left">
+          <ons-icon fixed-width class="list-item__icon" icon="ion-home, material:md-home"></ons-icon>
+        </div>
+        <div class="center" style="right: 20px">
+          Home
+        </div>
+        </div>
+        
+      </ons-list-item>
+     <ons-list-item onclick="fn.pushPage({'id': 'sample.html', 'title': 'Infinite Scroll'})">
+        <div class="left">
+          <ons-icon fixed-width class="list-item__icon" icon="ion-monitor"></ons-icon>
+        </div>
+        <div class="center">
+          About ICT 
+        </div>
+        
+      </ons-list-item>
+    </ons-list>
+
+    <ons-list-title style="margin-top: 10px">Links</ons-list-title>
+    <ons-list>
+      
+      <ons-list-item onclick="fn.loadLink('https://m.facebook.com/IAREOFFICIAL/')">
+        <div class="left">
+          <ons-icon fixed-width class="list-item__icon" icon="ion-social-facebook"></ons-icon>
+        </div>
+        <div class="center">
+         facebook
+        </div>
+        <div class="right">
+          <ons-icon icon="fa-external-link"></ons-icon>
+        </div>
+      </ons-list-item>
+      <ons-list-item onclick="fn.loadLink('https://www.iare.ac.in/')">
+        <div class="left">
+          <ons-icon fixed-width class="list-item__icon" icon="ion-android-globe"></ons-icon>
+        </div>
+        <div class="center">
+          Web
+        </div>
+        <div class="right">
+          <ons-icon icon="fa-external-link"></ons-icon>
+        </div>
+      </ons-list-item>
+     <ons-list-item onclick="fn.loadLink('http://100pins.com/signup/iare')">
+        <div class="left">
+          <ons-icon fixed-width class="list-item__icon" icon="ion-person-stalker"></ons-icon>
+        </div>
+        <div class="center">
+          100 pins
+        </div>
+        <div class="right">
+          <ons-icon icon="fa-external-link"></ons-icon>
+        </div>
+      </ons-list-item>
+    </ons-list>
+
+    <script>
+      ons.getScriptPage().onInit = function() {
+        // Set ons-splitter-side animation
+        this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');
+      };
+    </script>-->
+
+    <style>
+      .profile-pic {
+        width: 100px;
+        background-color: #fff;
+        margin: 20px auto 10px;
+        border: 1px solid #999;
+        border-radius: 4px;
+      }
+
+      .profile-pic > img {
+        display: block;
+        max-width: 100%;
+      }
+
+      ons-list-item {
+        color: #444;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="sample.html">
+  <ons-page id="dialogs-page">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+    </ons-toolbar>
+  
+    <ons-page >
+  <h3 style="text-align:center;color:blue;">About ICT</h3>
+  <ons-card style="text-align:justify">
+    <h6>Information and communication technologies is used  to assist students to learn more effectively by providing teachers with access to a wide range of new pedagogy, it enables students to have more informed and more profitable access to teachers' knowledge and skills.
+    </h6>
+  </ons-card>
+    
+  <ons-card style="text-align: justify;">
+    <ons-row>
+   <!--------------  developers code starts here      ----------------------------------------------------------------------------------------->
+  <!--<h3 style="text-align:center;color:blue; display:table; margin:0 auto; ">Members of Information and Communication Technology(ICT)</h3>-->
+  <ul>
+  <h3 style="color:blue;">Team Members</h3>
+  <ul>
+  <li><h4>Dr B Venkateswara Rao</h4></li>
+  <li><h4>Santosh Patil</h4></li>
+  <li><h4>N Poorna Chandra Rao</h4></li>
+  <li><h4>D Rahul</h4></li>
+  <li><h4>S Lakxman Kumar</h4></li>
+  </ul>
+  <br>
+  <br>
+  <h3 style="color:blue;">Developers</h3>
+  <ul>
+   <li><h4>K.Abhinav Kumar</h4></li>
+  <li><h4>Anvesh</h4></li>
+  <li><h4>Gattupalli Ashwin</h4></li>
+  <li><h4>Anumolu Hemanth Kumar</h4></li>
+  </ul>
+  </ul>
+  </ons-row>
+</ons-card>
+
+    <style>
+      #lorem-dialog .dialog-container {
+        height: 200px;
+      }
+
+      ons-list-title {
+        margin-top: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+
+<!--<template id="home.html">
+  <ons-page>
+    <h1 class="intro">
+      Data Structures<br><br>
+    </h1>
+
+    <ons-card onclick="fn.pushPage({'id': 'pullHook.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-document-text"></ons-icon></div>
+      <div class="title">Syllabus</div>
+      <div class="content">Where's my syllabus to guide me through course?</div>
+    
+    </ons-card>
+    <ons-card onclick="fn.pushPage({'id': 'dialogs.html', 'title': 'Dialogs'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-bulb"></ons-icon></div>
+      <div class="title">Course Information Sheet</div>
+      <div class="content">First rule of engineering; beware prototypes. Along with, avoid anything made by an engineer who doesn't have all his own fingers.</div>
+    </ons-card>
+    <ons-card onclick="fn.pushPage({'id': 'buttons.html', 'title': 'Buttons'})">
+  <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-ios-list-outline"></ons-icon></div>
+      <div class="title">Schedule of Instructions</div>
+      <div class="content">A man who dares to waste one hour of life has not discovered the value of life.</div>
+    </ons-card>
+    
+    <ons-card onclick="fn.pushPage({'id': 'infiniteScroll.html', 'title': 'Infinite Scroll'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-clipboard"></ons-icon></div>
+      <div class="title">Questions Bank</div>
+      <div class="content">Engineers like to solve problems. If there are no problems handily available, they will create their own problems.</div>
+    </ons-card>
+    <ons-card onclick="fn.pushPage({'id': 'progress.html', 'title': 'progress'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-clipboard"></ons-icon></div>
+      <div class="title">Question Papers </div>
+      <div class="content">Scientists study the world as it is, engineers create the world that never has been.</div>
+    </ons-card>
+    
+
+    <style>
+      .intro {
+        text-align: center;
+        padding: 0 20px;
+        margin-top: 40px;
+      }
+
+      ons-card {
+        cursor: pointer;
+        color: #333;
+      }
+
+      .card__title,
+      .card--material__title {
+        font-size: 20px;
+      }
+    </style>
+  </ons-page>
+</template>-->
+<template id="home.html">
+  <ons-page>
+    <h1 class="intro" style="color:#8C001A;">
+      <span id="textTitle"></span><br>
+   
+   
+    </h1>
+
+    <ons-card onclick="loadSyllabus();fn.pushPage({'id': 'samp.html', 'title': 'PullHook'})" style="background-color: #FFF8C6;">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-document-text"></ons-icon></div>
+      <div class="title">Syllabus</div>
+      <div class="content">Where's my syllabus to guide me through course?</div>
+    
+    </ons-card>
+    <ons-card onclick="loadCIS();fn.pushPage({'id': 'dialogs.html', 'title': 'Dialogs'})" style="background-color:#C3FDB8;">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-bulb"></ons-icon></div>
+      <div class="title">Course Information Sheet</div>
+      <div class="content">First rule of engineering; beware prototypes. Along with, avoid anything made by an engineer who doesn't have all his own fingers.</div>
+    </ons-card>
+    <ons-card onclick="loadWeeks();fn.pushPage({'id': 'buttons.html', 'title': 'Buttons'})" style="background-color:#ECC5C0;">
+  <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-ios-list-outline"></ons-icon></div>
+      <div class="title">Schedule of Instructions</div>
+      <div class="content">A man who dares to waste one hour of life has not discovered the value of life.</div>
+    </ons-card>
+   
+    <ons-card onclick="loadQB();fn.pushPage({'id': 'infiniteScroll.html', 'title': 'Infinite Scroll'})" style="background-color:#FFF8C6;">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-clipboard"></ons-icon></div>
+      <div class="title">Questions Bank</div>
+      <div class="content">Engineers like to solve problems. If there are no problems handily available, they will create their own problems.</div>
+    </ons-card>
+    <ons-card onclick="loadQP();fn.pushPage({'id': 'progress.html', 'title': 'progress'})" style="background-color:#C3FDB8;">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-clipboard"></ons-icon></div>
+      <div class="title">Model Question Papers </div>
+      <div class="content">Scientists study the world as it is, engineers create the world that never has been.</div>
+    </ons-card>
+   <!--<ons-card onclick="fn.pushPage({'id': 'carousel.html', 'title': 'Faculty Profiles'})" style="background-color: #ECC5C0;">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-ios-book"></ons-icon></div>
+      <div class="title">Faculty Profiles</div>
+      <div class="content"></div>
+    </ons-card>-->
+
+    <style>
+      .intro {
+        text-align: center;
+        padding: 0 20px;
+        margin-top: 40px;
+      }
+
+      ons-card {
+        cursor: pointer;
+        color: #333;
+      }
+
+      .card__title,
+      .card--material__title {
+        font-size: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+
+
+<template id="animations.html">
+  <ons-page>
+    <ons-list>
+      <ons-list-header style="font-size: 150%; color: #7B241C"><center>Week Wise Videos Contents</center></ons-list-header>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition1.html', 'title': 'Week-1'}, 'slide-ios')" >
+        Week-1
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition2.html', 'title': 'Week-2'}, 'slide-ios')">
+        Week-2
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition3.html', 'title': 'Week-3'}, 'slide-ios')">
+        Week-3
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition4.html', 'title': 'Week-4'}, 'slide-ios')">
+        Week-4
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition5.html', 'title': 'Week-5'}, 'slide-ios')">
+        Week-5
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition6.html', 'title': 'Week-6'}, 'slide-ios')">
+        Week-6
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition7.html', 'title': 'Week-7'}, 'slide-ios')">
+         Week-7
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition8.html', 'title': 'Week-8'}, 'slide-ios')">
+         Week-8
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition9.html', 'title': 'Week-9'}, 'slide-ios')">
+         Week-9
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition10.html', 'title': 'Week-10'}, 'slide-ios')">
+         Week-10
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition11.html', 'title': 'Week-11'}, 'slide-ios')">
+         Week-11
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition12.html', 'title': 'Week-12'}, 'slide-ios')">
+         Week-12
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition13.html', 'title': 'Week-13'}, 'slide-ios')">
+         Week-13
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition14.html', 'title': 'Week-14'}, 'slide-ios')">
+         Week-14
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition15.html', 'title': 'Week-15'}, 'slide-ios')">
+         Week-15
+      </ons-list-item>
+      <ons-list-item modifier="chevron" onclick="fn.pushPage({'id': 'transition16.html', 'title': 'Week-16'}, 'slide-ios')">
+         Week-16
+      </ons-list-item>
+    </ons-list>
+  </ons-page>
+</template>
+<!-- schedule of instruction -->
+
+
+<template id="schedule1.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;" >Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+            
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+ <div id="week1">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links -------------------------------------------------------------->
+ 
+ <div id="pdfLinks1">
+ </div>
+
+<!-----------------ppt links------------------------------------>
+ <div id="pptLinks1">
+ </div>
+<!-- schedule2 -->
+
+<template id="schedule2.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week2">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links -------------------------------------->
+ 
+ <div id="pdfLinks2">
+ </div>
+
+<!--ppt links ------------------------------------------------------------------>
+<div id="pptLinks2"></div>
+<!-----!--schedule 3---------------------------->
+<template id="schedule3.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white;height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week3">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks3"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks3"></div>
+<!--schedue4-->
+<template id="schedule4.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+  
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week4">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks4"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks4"></div>
+<!--schedule5-->
+<template id="schedule5.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week5">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks5"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks5"></div>
+<!-- week syllabus -------------------------------------------------------------------------------------------------------------->
+<!--schedue4-->
+<template id="schedule6.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week6">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks6"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks6"></div>
+<!--schedue4-->
+<template id="schedule7.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week7">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks7"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks7"></div>
+<!--schedue4-->
+<template id="schedule8.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white;height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week8">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks8"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks8"></div>
+<!--schedue4-->
+<template id="schedule9.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week9">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks9"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks9"></div>
+<!--schedue4-->
+<template id="schedule10.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white;height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week10">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks10"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks10"></div>
+<!--schedue4-->
+<template id="schedule11.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white;height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week11">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks11"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks11"></div>
+<!--schedue4-->
+<template id="schedule12.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week12">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks12"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks12"></div>
+<!--schedue4-->
+<template id="schedule13.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week13">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks13"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks13"></div>
+<!--schedue4-->
+<template id="schedule14.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <h3 style="background-color:#30ADB0;text-align:center;color:white; height: 40px; padding-top:12px;">Schedule of Instructions</h3>
+  <p></p>
+ <!----- Table strats from here -->
+  <ons-row>
+    <ons-col width="40px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Lec.<br>No</b> </ons-col>
+
+   <ons-col width="150px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Topic to be covered</b></ons-col>
+    <ons-col width="80px" style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>Handouts</b></ons-col>
+
+   <ons-col  style =" border: 1px solid #8A0808;
+                      background: #30ADB0;
+                      overflow: hidden;
+                      padding: 4px;
+                       color: white;,width:;height: ;"><b>PPT</b></ons-col>
+  </ons-row>
+  
+<div id="week14">
+</div>
+  </ons-page>
+</template>
+ <!-- pdf links---------------------------------------------------- -->
+ <div id="pdfLinks14"></div>
+
+<!--ppt links----------------------------------------------------------- -->
+<div id="pptLinks14"></div>
+<template id="samp.html">
+ <ons-page id="dialogs-page">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+      <div class="right">
+        <ons-toolbar-button id="info-button" onclick="fn.showDialog('popover-dialog')"></ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+  <iframe id="pdfviewerS" src="" frameborder="0" width="100%" height="100%"></iframe>
+    <style>
+      #lorem-dialog .dialog-container {
+        height: 200px;
+      }
+
+      ons-list-title {
+        margin-top: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+
+<!--<template id="pullHook.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="pull-hook" threshold-height="120px">
+      <ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+    <ons-card onclick="fn.pushPage({'id': 'weeksyb1.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-star-outline"></ons-icon></div>
+      <div class="title">Unit 1</div>
+      
+    
+    </ons-card>
+  <ons-card onclick="fn.pushPage({'id': 'weeksyb2.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-star-outline"></ons-icon></div>
+      <div class="title">Unit 2</div>
+      
+    
+    </ons-card>
+  <ons-card onclick="fn.pushPage({'id': 'weeksyb3.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-star-outline"></ons-icon></div>
+      <div class="title">Unit 3</div>
+      
+    </ons-card>
+  <ons-card onclick="fn.pushPage({'id': 'weeksyb4.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-star-outline"></ons-icon></div>
+      <div class="title">Unit 4</div>
+      
+    </ons-card>
+  <ons-card onclick="fn.pushPage({'id': 'weeksyb5.html', 'title': 'PullHook'})">
+    <div style="float:right"><ons-icon size="40px" fixed-width class="list-item__icon" icon="ion-android-star-outline"></ons-icon></div>
+      <div class="title">Unit 5</div>
+     
+    
+    </ons-card>
+  
+
+    
+
+    <style>
+      .pull-hook-content {
+        color: #666;
+        transition: transform .25s ease-in-out;
+      }
+    </style>
+  </ons-page>
+</template>-->
+
+<!-- anvesh  -->
+<template id="dialogs.html">
+  <ons-page id="dialogs-page">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+      <div class="right">
+        <ons-toolbar-button id="info-button" onclick="fn.showDialog('popover-dialog')"></ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+  <iframe id="pdfviewerCIS" src="" frameborder="0" width="100%" height="100%"></iframe>
+    <style>
+      #lorem-dialog .dialog-container {
+        height: 200px;
+      }
+
+      ons-list-title {
+        margin-top: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="buttons.html">
+ <ons-page>
+  <ons-toolbar>
+      <div class="left">
+        <ons-back-button >Schedule of Instructions</ons-back-button>
+      </div>
+    </ons-toolbar>
+
+   <!--
+    <section style="margin: 16px">
+      <ons-button class="button-margin">Normal</ons-button>
+      <ons-button modifier="quiet" class="button-margin">Quiet</ons-button>
+      <ons-button modifier="outline" class="button-margin">Outline</ons-button>
+      <ons-button modifier="cta" class="button-margin">Call to action</ons-button>
+      <ons-button modifier="light" class="button-margin">Light</ons-button>
+      <ons-button modifier="large" class="button-margin">Large</ons-button>
+    </section>
+
+    <section style="margin: 16px">
+      <ons-button class="button-margin" disabled>Normal</ons-button>
+      <ons-button modifier="quiet" class="button-margin" disabled>Quiet</ons-button>
+      <ons-button modifier="outline" class="button-margin" disabled>Outline</ons-button>
+      <ons-button modifier="cta" class="button-margin" disabled>Call to action</ons-button>
+      <ons-button modifier="light" class="button-margin" disabled>Light</ons-button>
+      <ons-button modifier="large" class="button-margin" disabled>Large</ons-button>
+    </section>
+
+    <ons-fab position="top right">
+      <ons-icon icon="md-face"></ons-icon>
+    </ons-fab>
+
+    <ons-fab position="bottom left" disabled>
+      <ons-icon icon="md-car"></ons-icon>
+    </ons-fab>
+
+    <ons-speed-dial position="bottom right" direction="up" :open.sync="spdOpen">
+      <ons-fab>
+        <ons-icon icon="md-share"></ons-icon>
+      </ons-fab>
+      <ons-speed-dial-item onclick="ons.notification.confirm(`Share on Twitter?`)">
+        <ons-icon icon="md-twitter"></ons-icon>
+      </ons-speed-dial-item>
+      <ons-speed-dial-item onclick="ons.notification.confirm(`Share on Facebook?`)">
+        <ons-icon icon="md-facebook"></ons-icon>
+      </ons-speed-dial-item>
+      <ons-speed-dial-item onclick="ons.notification.confirm(`Share on Google+`)">
+        <ons-icon icon="md-google-plus"></ons-icon>
+      </ons-speed-dial-item>
+    </ons-speed-dial>
+
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+    </script>
+
+    <style>
+      .button-margin {
+        margin: 6px 0;
+      }
+    </style>
+  -->
+  
+  <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-pull-hook id="schedule-week" threshold-height="120px">
+      <ons-icon id="schedule-week-icon" size="22px" class="schedule-week-content" icon="fa-arrow-down"></ons-icon>
+    </ons-pull-hook>
+
+<div id="w1">
+</div>
+  
+
+    
+
+    <style>
+      .schedule-week-content {
+        color: #666;
+        transition: transform .25s ease-in-out;
+      }
+    </style>
+
+
+
+  
+  </ons-page>
+</template>
+
+
+<template id="carousel.html">
+  <ons-page>
+   <ons-toolbar>
+      <div class="left">
+        <ons-back-button>back</ons-back-button>
+      </div>
+      <div class="center"></div>
+    </ons-toolbar>
+
+    <ons-carousel id="carousel" fullscreen swipeable auto-scroll overscrollable initial-index="0">
+      <ons-carousel-item class="carousel-item">
+        <div class="color-tag">
+            <center><img src="./fac1.jpg" style="top:70px;"/></center>
+            <br>
+            <center><p style="font-size:20px;color:#16A085;">Course-coordinator</p>
+              <p style="font-size:20px;color:black;">B.Padmaja,&nbsp Associate Professor</p>
+              </center>
+            </div>
+          
+      </ons-carousel-item>
+
+      <ons-carousel-item class="carousel-item">       
+         <div class="color-tag">
+            <center><img src="./fac3.jpg" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;">Dr. G Ramu,&nbsp Professor</p>
+              </center>
+            </div>
+       
+      </ons-carousel-item>
+      <ons-carousel-item class="carousel-item">
+        <div class="color-tag">
+            <center><img src="./fac2.JPG" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;">Dr. J Sirisha Devi,&nbsp Professor</p>
+              </center>
+            </div>
+      </ons-carousel-item>
+      <ons-carousel-item class="carousel-item">
+       <div class="color-tag">
+            <center><img src="./fac4.JPG" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;"> Ms N Jayanthi,&nbsp Assistant Professor</p>
+              </center>
+            </div>
+      </ons-carousel-item>
+
+<ons-carousel-item class="carousel-item">       
+         <div class="color-tag">
+            <center><img src="./rad.jpg" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;"> Ms. K Radhika,&nbsp Assistant Professor</p>
+              </center>
+            </div>
+       
+      </ons-carousel-item>
+
+
+
+       <ons-carousel-item class="carousel-item">       
+         
+       <div class="color-tag">
+            <center><img src="./fac5.jpg" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;"> Ms. B Rekha,&nbsp Assistant Professor</p>
+              </center>
+            </div>
+      </ons-carousel-item>
+       <ons-carousel-item class="carousel-item">       
+         
+       <div class="color-tag">
+            <center><img src="./fac6.jpg" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;">Mr. Y Subba Rayudu,&nbsp Assistant Professor</p>
+              </center>
+            </div>
+      </ons-carousel-item>
+       <ons-carousel-item class="carousel-item">       
+         <div class="color-tag">
+            <center><img src="./fac7.jpg" style="top:70px;"/></center>
+            <br>
+            <center>
+              <p style="font-size:20px;color:black;">Mr. D Rahul,&nbsp Assistant Professor</p>
+              </center>
+            </div>
+       
+      </ons-carousel-item>
+    </ons-carousel>
+
+    <div class="dots">
+      <span id="dot0" class="dot" onclick="fn.swipe(this)">
+        &#9679;
+      </span>
+      <span id="dot1" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot2" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot3" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot4" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot5" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot6" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      <span id="dot7" class="dot" onclick="fn.swipe(this)">
+        &#9675;
+      </span>
+      
+    </div>
+
+     <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+        const carousel = document.getElementById('carousel');
+        carousel.addEventListener('postchange', function () {
+          var index = carousel.getActiveIndex();
+          const dots = document.querySelectorAll('.dot');
+          for (dot of dots) {
+            dot.innerHTML = dot.id === 'dot' + index ? '&#9679;' : '&#9675;';
+          }
+        });
+        window.fn.swipe = function (target) {
+          carousel.setActiveIndex(Number(target.id.slice(-1)));
+        }
+      }
+    </script>
+
+
+    <style>
+      .carousel-item {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .color-tag {
+        color: #fff;
+        font-size: 48px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .dots {
+        text-align: center;
+        font-size: 30px;
+        color: grey;
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        right: 0;
+      }
+
+      .dots > span {
+        cursor: pointer;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="loadMore.html">
+  <!-- Load more items on scroll bottom -->
+  <ons-page id="load-more-page" on-infinite-scroll="fn.loadMore">
+    <p class="intro">
+      Useful for loading more items when the scroll reaches the bottom of the page, typically after an asynchronous API call.<br><br>
+    </p>
+
+    <ons-list id="list-node"></ons-list>
+
+    <div class="after-list">
+      <ons-icon icon="fa-spinner" size="26px" spin></ons-icon>
+    </div>
+
+    <script>
+      ons.getScriptPage().onInit = function () {
+        var listNode = document.getElementById('list-node');
+        var createListItem = function (i) {
+          return ons.createElement(`<ons-list-item>Item #${i}</ons-list-item>`);
+        }
+        for (var i = 0; i < 30; i++) {
+          listNode.appendChild(createListItem(i));
+        }
+        window.fn.loadMore = function (done) {
+          setTimeout(function() {
+            const listLength = listNode.children.length;
+            for (var i = 0; i < 10; i++) {
+              listNode.appendChild(createListItem(listLength + i));
+            }
+            done();
+          }, 600)
+        }
+      }
+    </script>
+
+    <style>
+      .after-list {
+        margin: 20px;
+        text-align: center;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="lazyRepeat.html">
+  <!-- Lazy load thousands of items -->
+  <ons-page id="lazy-repeat-page">
+    <p class="intro">
+      Automatically unloads items that are not visible and loads new ones. Useful when the list contains thousands of items.<br><br>
+    </p>
+
+    <ons-list>
+      <ons-lazy-repeat id="infinite-list"></ons-lazy-repeat>
+    </ons-list>
+
+    <script>
+      ons.getScriptPage().onInit = function () {
+        var infiniteList = document.getElementById('infinite-list');
+
+        infiniteList.delegate = {
+          createItemContent: function (i) {
+            return ons.createElement(`<ons-list-item>Item #${i}</ons-list-item>`);
+          },
+          countItems: function () {
+            return 3000;
+          }
+        };
+
+        infiniteList.refresh();
+      }
+    </script>
+
+    <style>
+      .intro {
+        text-align: center;
+        padding: 0 20px;
+        margin-top: 40px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="infiniteScroll.html">
+  <ons-page id="dialogs-page">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+      <div class="right">
+        <ons-toolbar-button id="info-button" onclick="fn.showDialog('popover-dialog')"></ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+  <iframe id="pdfviewerQB" src="" frameborder="0" width="100%" height="100%"></iframe>
+    <style>
+      #lorem-dialog .dialog-container {
+        height: 200px;
+      }
+
+      ons-list-title {
+        margin-top: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+<template id="progress.html">
+ <ons-page id="dialogs-page">
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>Home</ons-back-button>
+      </div>
+      <div class="center"></div>
+      <div class="right">
+        <ons-toolbar-button id="info-button" onclick="fn.showDialog('popover-dialog')"></ons-toolbar-button>
+      </div>
+    </ons-toolbar>
+  <iframe id="pdfviewerQP" src="" frameborder="0" width="100%" height="100%"></iframe>
+    <style>
+      #lorem-dialog .dialog-container {
+        height: 200px;
+      }
+
+      ons-list-title {
+        margin-top: 20px;
+      }
+    </style>
+  </ons-page>
+</template>
+
+
+<style>
+  ons-splitter-side[animation=overlay] {
+    border-left: 1px solid #bbb;
+  }
+</style>
+
+<template id="transition1.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+      
+            <!-- <iframe width="400" height="300" src="https://www.youtube.com/embed/Ny0RQvJ_Ufg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  --></div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+<!--- week 2 starts here -->
+<template id="transition2.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+     
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+
+<!--- --->
+<!--- week 3 starts here -->
+<template id="transition3.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+<!--- --->
+<!--- week 4 starts here -->
+<template id="transition4.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- -->
+<!--- week 5 starts here -->
+<template id="transition5.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+<!--- --->
+<!--- week 6 starts here -->
+<template id="transition6.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- --->
+<!--- week 7 starts here -->
+<template id="transition7.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+<!--- week 8 starts here -->
+<template id="transition8.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 9 starts here -->
+<template id="transition9.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+    </ons-toolbar>
+    <div class="center" style="float:center">
+     </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 10 starts here -->
+<template id="transition10.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+
+       </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 11 starts here -->
+<template id="transition11.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+     </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 12 starts here -->
+<template id="transition12.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+<!--- week 13 starts here -->
+<template id="transition13.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+<!--- week 14 starts here -->
+<template id="transition14.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+    </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 15 starts here -->
+<template id="transition15.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<!--- week 16 starts here -->
+<template id="transition16.html">
+  <ons-page>
+    <ons-toolbar>
+      <div class="left">
+        <ons-back-button>video Content</ons-back-button>
+      </div>
+      
+    </ons-toolbar>
+    <div class="center" style="float:center">
+   
+  </div>
+    <script>
+      ons.getScriptPage().onInit = function () {
+        this.querySelector('ons-toolbar div.center').textContent = this.data.title;
+      }
+   </script>
+  </ons-page>
+</template>
+
+
+<style>
+  ons-splitter-side[animation=overlay] {
+    border-left: 1px solid #bbb;
+  }
+</style>
+<script type="text/javascript">
+  function loadWeeks() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      document.getElementById('w1').innerHTML = this.responseText;
+  };
+  xhttp.open("GET", "http://iareict.in/getAllWeeks.php?sub="+((location.href).split("sub=")[1]).replace(/%20/g, " "), true);
+  xhttp.send();
+}
+loadSyllabus();
+</script>
+</body>
+</html>
